@@ -22,7 +22,6 @@ class VotePanel extends React.Component {
         render(){
             return (
                 <div className='row vote-counter'>
-                        <pre>{JSON.stringify(this.state.postId, 0, 2)}</pre>
                         <Transition animation='pulse' duration='100' visible={this.state.visibleUp}>
                             <div onClick={() => this.toggleVisibilityUp()}>
                                 <TiArrowUp size={50} onClick={() => this.props.votingFunction(this.props.id, {option: 'upVote'}, this.props.postId)} />

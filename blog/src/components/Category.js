@@ -9,6 +9,7 @@ import Post from './Post';
 import VotePanel from './VotePanel';
 import OrderForm from './forms/OrderForm';
 import { Link } from 'react-router-dom';
+import PageNotFound from './PageNotFound';
 
 
 class Category extends Component {
@@ -28,6 +29,7 @@ class Category extends Component {
         if (this.props.match.url !== nextProps.match.url){
             this.props.fetchCategoryPosts(category)
         }
+
     }
 
     sortingPosts = (value) => {
@@ -53,46 +55,55 @@ class Category extends Component {
                 })
         }
         return (
-            <div className='container-fluid fill'>
-                <div className='row'>
-                    <div className='col-md-6 col-sm-6'>
-                        <OrderForm
-                            sortingPosts={this.sortingPosts}
-                        />
-                    </div>
-                    <div className='col-md-6 col-sm-6'>
-                        <button className='btn btn-primary float-right'><Link to='/post/create'>Create Post</Link></button>
-                    </div>
-                </div>
-                    {this.props.posts.data ? (
-                        <div className='post-list fill'>
-                        <ul>
-                        {this.props.posts.data.map(post => (
-                            <li key={post.id}>
-                                <div className='row'>
-                                    <div className='col-md-3 col-sm-3'>
-                                        <VotePanel
-                                            id={post.id}
-                                            votes={post.voteScore}
-                                            votingFunction={this.props.votingFetchCategory}
-                                            category={this.props.match.params.category}
-                                        />
+
+            <div>
+                {['react', 'udacity', 'redux'].includes(this.props.match.params.category) ? (
+
+                                <div className='container-fluid fill'>
+                                    <div className='row'>
+                                        <div className='col-md-6 col-sm-6'>
+                                            <OrderForm
+                                                sortingPosts={this.sortingPosts}
+                                            />
+                                        </div>
+                                        <div className='col-md-6 col-sm-6'>
+                                            <button className='btn btn-primary float-right'><Link to='/post/create'>Create Post</Link></button>
+                                        </div>
                                     </div>
-                                    <div className='col-md-9 col-sm-9'>
-                                        <Post
-                                            post={post}
-                                            location={this.props.location.pathname}
-                                        />
-                                    </div>
+                                        {this.props.posts.data ? (
+                                            <div className='post-list fill'>
+                                            <ul>
+                                            {this.props.posts.data.map(post => (
+                                                <li key={post.id}>
+                                                    <div className='row'>
+                                                        <div className='col-md-3 col-sm-3'>
+                                                            <VotePanel
+                                                                id={post.id}
+                                                                category={post.Category}
+                                                                votes={post.voteScore}
+                                                                votingFunction={this.props.votingFetchCategory}
+                                                            />
+                                                        </div>
+                                                        <div className='col-md-9 col-sm-9'>
+                                                            <Post
+                                                                post={post}
+                                                                location={this.props.location.pathname}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                        </div>
+                                        ) : (
+                                            <div>Loading...</div>
+                                        )}
                                 </div>
-                            </li>
-                        ))}
-                    </ul>
-                    </div>
-                    ) : (
-                        <div>Loading...</div>
-                    )}
+                ) : (
+                    <PageNotFound/>
+                )}
             </div>
+
         )
     }
 }

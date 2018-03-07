@@ -15,6 +15,7 @@ import randomstring from  'randomstring';
 import { clearFields } from 'redux-form';
 import { Redirect } from 'react-router-dom';
 import moment from 'moment';
+import PageNotFound from './PageNotFound';
 
 
 class PostPage extends Component {
@@ -48,29 +49,35 @@ class PostPage extends Component {
     render(){
         return (
             <div>
-                {this.props.categories.data && (
-            <div>
-                <PostDetail
-                    postId={this.props.match.params.postId}
-                    posts={this.props.posts}
-                    comments={this.props.comments}
-                    categories={this.props.categories.data.categories}
-                    fetchPost={this.props.fetchPost}
-                    votingPost={this.props.votingPost}
-                    fetchComments={this.props.fetchComments}
-                />
-                <hr/>
-                <CommentList
-                    postId={this.props.match.params.postId}
-                    comments={this.props.comments}
-                    fetchComments={this.props.fetchComments}
-                />
-                <br/>
-                <CommentForm submitComment={this.submitComment}/>
-            </div>
-            )}
-            </div>
+            {this.props.posts.data ? (
+                <div>
+                    {this.props.categories.data && (
+                <div>
+                    <PostDetail
+                        postId={this.props.match.params.postId}
+                        posts={this.props.posts}
+                        comments={this.props.comments}
+                        categories={this.props.categories.data.categories}
+                        fetchPost={this.props.fetchPost}
+                        votingPost={this.props.votingPost}
+                        fetchComments={this.props.fetchComments}
+                    />
+                    <hr/>
+                    <CommentList
+                        postId={this.props.match.params.postId}
+                        comments={this.props.comments}
+                        fetchComments={this.props.fetchComments}
+                    />
+                    <br/>
+                    <CommentForm submitComment={this.submitComment}/>
+                </div>
+                )}
+                </div>
 
+            ) : (
+                <PageNotFound/>
+            )}
+        </div>
         )
     }
 }

@@ -9,7 +9,8 @@ export const voteFetchCategory = (posts) => ({
 
 export const votingFetchCategory = (postId, data, rest) => dispatch => (
     votePost(postId, data)
-        .then(() => getPostCategory(rest.category))
+        .then(post => post.data.category)
+        .then((category) => getPostCategory(category))
         .then(posts => dispatch(voteFetchCategory(posts))
     )
 )

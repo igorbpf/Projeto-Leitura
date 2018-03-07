@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import DeleteButton from './DeleteButton';
 import moment from 'moment';
+import PageNotFound from './PageNotFound';
 
 
 class PostDetail extends Component{
@@ -25,9 +26,10 @@ class PostDetail extends Component{
         const id = this.props.postId
         this.props.fetchPost(id)
             .then(() => this.setState({ posts: this.props.posts.data }))
+    if (this.props.comments.data){
         this.props.fetchComments(id)
             .then(() => this.setState({ commentsCount: this.props.comments.data.length }))
-
+        }
     }
 
     componentWillReceiveProps(nextProps){

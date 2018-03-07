@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { deletePost, upPost } from '../actions';
+import { deletePost,
+    upPost,
+    fetchCategoryPosts
+} from '../actions';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
@@ -8,6 +11,7 @@ import DeleteButton from './DeleteButton';
 import Modal from 'react-modal';
 import PostForm from './forms/PostForm';
 import { Redirect } from 'react-router-dom';
+import PageNotFound from './PageNotFound';
 
 
 class Post extends React.Component {
@@ -32,6 +36,7 @@ class Post extends React.Component {
             .then(() => {
                 if (this.props.location !== '/'){
                     this.setState({ editted: true })
+                    this.props.fetchCategoryPosts(values.category)
                 }
             })
 
@@ -49,8 +54,8 @@ class Post extends React.Component {
     render(){
         return (
             <div>
-            {this.state.editted || !this.props.post.category ? (
-                <Redirect to='*'/>
+            {!this.props.post.category ? (
+                <PageNotFound/>
             ) : (
                 <div className='post-info'>
                         <Link to={`/${this.props.post.category}/${this.props.post.id}`}>
@@ -118,6 +123,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         deletePost: (postId) => dispatch(deletePost(postId)),
         upPost: (postId, data) => dispatch(upPost(postId, data)),
+        fetchCategoryPosts: (category) => dispatch(fetchCategoryPosts(category)),
     }
 }
 
