@@ -25,7 +25,7 @@ class CategoryPanel extends Component {
                         <ul className="text-center">
                             {this.state.categories.map((category, index) => (
                                 <li key={index} className="categories">
-                                    <Link to={`/category/${category.name}`}>{category.name}</Link>
+                                    <Link to={`/${category.name}`}>{category.name}</Link>
                                 </li>
                             ))}
                         </ul>

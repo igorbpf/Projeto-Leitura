@@ -11,7 +11,7 @@ const Main = () => (
     <div className='main col-md-9 col-sm-9'>
             <Switch>
                 <Route exact path='/' component={Home} />
-                <Route path='/category/:category' component={Category} />
+                <Route exact path='/:category' component={Category} />
                 <Route path='/post/create' component={PostFormPage} />
                 <Route path='/:category/:postId' component={PostPage} />
                 <Route path='*' component={PageNotFound} />
